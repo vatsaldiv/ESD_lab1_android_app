@@ -62,10 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
-                    if(snapshot.hasChild("data1"))
+                    if(snapshot.hasChild("data0"))
                     {
                         Data d = new Data(
-                                Integer.parseInt(snapshot.getKey().toString()),
+                                (snapshot.getKey().toString()),
+                                Integer.parseInt(snapshot.child("data0").getValue().toString()),
                                 Float.parseFloat(snapshot.child("data1").getValue().toString()),
                                 Float.parseFloat(snapshot.child("data2").getValue().toString()),
                                 snapshot.child("data3").getValue().toString()
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         Iterator<Data> iterator = dataList.iterator();
 
-        Data Avg = new Data(0,0,0,"yo");
+        Data Avg = new Data("",0,0.0f,0.0f,"yo");
 
         while (iterator.hasNext())
         {
@@ -151,16 +152,18 @@ public class MainActivity extends AppCompatActivity {
 
     class Data
     {
-        private int count;
+        private String uid;
         private float temp;
         private float light;
         private String dateTime;
+        private int count;
 
-        public Data(int count, float temp, float light, String dateTime) {
-            this.count = count;
+        public Data(String uid, int count, float temp, float light, String dateTime) {
+            this.uid = uid;
             this.temp = temp;
             this.light = light;
             this.dateTime = dateTime;
+            this.count = count;
         }
 
         public int getCount() {
@@ -169,6 +172,14 @@ public class MainActivity extends AppCompatActivity {
 
         public void setCount(int count) {
             this.count = count;
+        }
+
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
         }
 
         public float getTemp() {
